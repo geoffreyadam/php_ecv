@@ -1,73 +1,73 @@
 <?php
 
-$car = [
-	'reference' => '1',
-	'wheels' => [
-		['flat' => false], 
-		['flat' => false],
-		['flat' => false],
-		['flat' => false]
-	], 
-	'broken' => true, 
-	'brand' => 'porsche' 
+class Car{
+	
+	public $reference;
+	public $wheels = [
+    ['flat' => false],
+    ['flat' => false],
+    ['flat' => false],
+    ['flat' => false],
 ];
-
-//Now i flat my tire 
-$car['wheels'][4]['flat'] = true;
-
-//Now fix car 
-if($car['broken'] == true){	
-	$car['broken'] = false;
+	public $broken;
+	public $brand;
+	
+	function construction($reference,$broken,$brand){
+		$this->reference = $reference;
+		$this->broken = $broken;
+		$this->brand = $brand;	
+	}
+	public function brokenCar(){
+		$this->broken = true;
+	}
+		public function repairCar(){
+		$this->broken = false;
+	}
+	
+	public function flatTire($wheels){
+		$this->wheels[$wheels]['flat'] = true;
+}
+	public function repairTire($wheels){
+		$this->wheels[$wheels]['flat'] = false;
 }
 
-
-// Now fix flat week 
-if($car['wheels'][0]['flat'] == true){
-	$car['wheels'][0]['flat'] = false;
-}
-if($car['wheels'][1]['flat'] == true){
-	$car['wheels'][1]['flat'] = false;
-}
-if($car['wheels'][2]['flat'] == true){
-	$car['wheels'][2]['flat'] = false;
-}
-if($car['wheels'][3]['flat'] = true){
-	$car['wheels'][1]['flat'] = false;
 }
 
-
-// Car broke again 
-
-$car['broken'] = true;
-
-// So we have to fix again ....
-
-if($car['broken'] == true){	
-	$car['broken'] = false;
-}
-
-//build a second car 
-$car2 = [
-	'reference' => '1',
-	'wheels' => [
-		['flat' => false], 
-		['flat' => false],
-		['flat' => false],
-		['flat' => false]
-	], 
-	'broken' => true, 
-	'brand' => 'fiat' 
-];
-
-
-//Park cars in my parking 
-$parking = [$car, $car2];
-$myPorsche = null;
-//take my car with brand 
-foreach($parking as $p){
-	if($p['brand'] == 'porsche'){
-		$myPorsche = $p;
+class Parking{
+	public function constructionParking($car1,$car2){
+		$this->car1 = $car1;
+		$this->car2 = $car2;
 	}
 }
 
-var_dump($myPorsche);
+$porshe = new Car();
+$porshe->construction(1, true, 'porsche');
+
+//Now i flat my tire 
+	$porshe->flatTire(2);
+
+//Now fix car 
+$porshe->repairCar();
+
+// Now fix flat week 
+for ($i = 0; $i <= 3; $i++) {
+	$porshe->repairTire($i);
+} 
+
+// Car broke again 
+$porshe->brokenCar();
+
+// So we have to fix again ....
+$porshe->repairCar();
+
+//build a second car 
+$fiat = new Car();
+$fiat->construction(2,false,'fiat');
+
+//Park cars in my parking 
+$park = new Parking();
+$park->constructionParking($porshe,$fiat);
+
+//take my car with brand 
+
+var_dump($park);
